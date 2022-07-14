@@ -21,45 +21,12 @@ struct ContentView: View {
                         CardView(content: emoji)
                             .aspectRatio(2/3, contentMode: .fit)
                     }
-                    
                 }
-                .foregroundColor(.red)
             }
-            Spacer()
-            
-            HStack {
-                remove
-                Spacer()
-                add
-            }
-            .padding(.horizontal)
-            .font(.largeTitle)
-
+            .foregroundColor(.red)
         }
         .padding(.horizontal)
-        
     }
-    
-    var remove: some View {
-        Button {
-            if emojiCount > 1 {
-                emojiCount -= 1
-            }
-        } label: {
-            Image(systemName: "minus.circle")
-        }
-    }
-    
-    var add: some View {
-        Button {
-            if emojiCount < emojis.count {
-                emojiCount += 1
-            }
-        } label: {
-            Image(systemName: "plus.circle")
-        }
-    }
-    
 }
 
 struct CardView: View {
@@ -89,8 +56,10 @@ struct CardView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .previewDevice("iPhone 13 Pro Max")
             .preferredColorScheme(.dark)
         ContentView()
+            .previewDevice("iPhone 13 mini")
             .preferredColorScheme(.light)
             .previewInterfaceOrientation(.landscapeLeft)
             
