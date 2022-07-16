@@ -47,7 +47,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         cards = Array<Card>()
         //add numberOfPaitsOfCards * 2 cards to array
         for pairIndex in 0..<numberOfPairsOfCards {
-            let content = createCardContent(pairIndex )
+            let content = createCardContent(pairIndex)
             
             cards.append(Card(content: content, id: pairIndex * 2))
             cards.append(Card(content: content, id: pairIndex * 2 + 1))
