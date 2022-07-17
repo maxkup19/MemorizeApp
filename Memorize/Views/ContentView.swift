@@ -15,12 +15,12 @@ struct ContentView: View {
         
         VStack {
             HStack {
-                Text("Memorize")
+                Text("Score: \(viewModel.gameScore)")
                     .font(.largeTitle)
                 Spacer()
-                Text("\(viewModel.theme.name)" )
+                Text("\(viewModel.name)" )
                     .font(.title2)
-                    .foregroundColor(.getFromString(name: viewModel.theme.color))
+                    .foregroundColor(.getFromString(name: viewModel.color))
             }
             .padding()
             ScrollView {
@@ -36,7 +36,7 @@ struct ContentView: View {
                     }
                 }
             }
-            .foregroundColor(.getFromString(name: viewModel.theme.color))
+            .foregroundColor(.getFromString(name: viewModel.color))
             .padding(.horizontal)
             
             Button {

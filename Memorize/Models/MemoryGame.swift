@@ -11,7 +11,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
     private(set) var cards: [Card]
     
     private var indexOfTheOneAndOnlyFaceUpCard: Int?
-    
+    private(set) var score = 0
     
     mutating func choose(card: Card) {
         if let chosenIndex = cards.firstIndex(where: { $0.id == card.id }),
@@ -21,6 +21,17 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
                 if cards[chosenIndex].content == cards[potentialIndex].content {
                     cards[chosenIndex].isMatched = true
                     cards[potentialIndex].isMatched = true
+                    
+                    score += 2
+                } else {
+                    if cards[chosenIndex].alreadySeen {
+                        score -= 1
+                    }
+                    if cards[potentialIndex].alreadySeen {
+                        score -= 1
+                    }
+                    cards[chosenIndex].alreadySeen = true
+                    cards[potentialIndex].alreadySeen = true
                 }
                 indexOfTheOneAndOnlyFaceUpCard = nil
             } else {
@@ -33,15 +44,6 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
             cards[chosenIndex].isFaceUp.toggle()
         }
 //        print("\(cards)")
-    }
-    
-    func index(of card: Card) -> Int? {
-        for index in 0..<cards.count {
-            if cards[index].id == card.id {
-                return index
-            }
-        }
-        return nil
     }
     
     init(numberOfPairsOfCards: Int, createCardContent: (Int) -> CardContent) {
@@ -59,6 +61,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
     struct Card: Identifiable {
         var isFaceUp: Bool = false
         var isMatched: Bool = false
+        var alreadySeen: Bool = false
         var content: CardContent
         
         var id: Int
