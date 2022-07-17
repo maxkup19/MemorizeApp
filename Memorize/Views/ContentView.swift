@@ -14,9 +14,15 @@ struct ContentView: View {
     var body: some View {
         
         VStack {
-            Text("Memorize")
-                .font(.largeTitle)
-            
+            HStack {
+                Text("Memorize")
+                    .font(.largeTitle)
+                Spacer()
+                Text("\(viewModel.theme.name)" )
+                    .font(.title2)
+                    .foregroundColor(.getFromString(name: viewModel.theme.color))
+            }
+            .padding()
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 65))]) {
                     ForEach(viewModel.cards) { card in
@@ -30,8 +36,16 @@ struct ContentView: View {
                     }
                 }
             }
-            .foregroundColor(.red)
+            .foregroundColor(.getFromString(name: viewModel.theme.color))
             .padding(.horizontal)
+            
+            Button {
+                viewModel.newGame()
+            } label: {
+                Text("New Game")
+                    .font(.largeTitle)
+            }
+
         }
     }
 }
@@ -58,7 +72,7 @@ struct CardView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        let game = EmojiMemoryGame()
+        let game = EmojiMemoryGame(chosenTheme: .vehicles)
         
         ContentView(viewModel: game)
             .previewDevice("iPhone 13 Pro Max")
