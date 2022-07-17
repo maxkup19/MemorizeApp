@@ -8,6 +8,15 @@
 import Foundation
 import SwiftUI
 
+extension Array {
+    var oneAndOnly: Element? {
+        if self.count == 1 {
+            return self.first
+        }
+        return nil
+    }
+}
+
 extension Color {
     static func getFromString(name: String) -> Color {
         switch name {
