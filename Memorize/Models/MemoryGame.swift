@@ -38,13 +38,11 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
                     cards[chosenIndex].alreadySeen = true
                     cards[potentialIndex].alreadySeen = true
                 }
+                cards[chosenIndex].isFaceUp.toggle()
             } else {
                 indexOfTheOneAndOnlyFaceUpCard = chosenIndex
             }
-                
-            cards[chosenIndex].isFaceUp.toggle()
         }
-//        print("\(cards)")
     }
     
     init(numberOfPairsOfCards: Int, createCardContent: (Int) -> CardContent) {

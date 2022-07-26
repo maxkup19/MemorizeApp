@@ -23,18 +23,9 @@ struct EmojiMemoryGameView: View {
                     .foregroundColor(.getFromString(name: game.color))
             }
             .padding()
-            ScrollView {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 65))]) {
-                    ForEach(game.cards) { card in
-                        CardView(card: card)
-                            .aspectRatio(2/3, contentMode: .fit)
-                            .onTapGesture {
-                                UISelectionFeedbackGenerator()
-                                    .selectionChanged()
-                                game.choose(card)
-                            }
-                    }
-                }
+            
+            AspectVGrid(items: game.cards, aspectRatio: 2/3) { card in
+                cardView(for: card)
             }
             .foregroundColor(.getFromString(name: game.color))
             .padding(.horizontal)
@@ -48,6 +39,22 @@ struct EmojiMemoryGameView: View {
 
         }
     }
+    
+    @ViewBuilder
+    private func cardView(for card: EmojiMemoryGame.Card) -> some View {
+        if card.isMatched && !card.isFaceUp {
+            Rectangle().opacity(0)
+        } else {
+            CardView(card: card)
+                .padding(3)
+                .onTapGesture {
+                    UISelectionFeedbackGenerator()
+                        .selectionChanged()
+                    game.choose(card)
+                }
+        }
+    }
+    
 }
 
 struct CardView: View {
@@ -55,32 +62,49 @@ struct CardView: View {
     let card: EmojiMemoryGame.Card
     
     var body: some View {
-        ZStack {
-            let shape = RoundedRectangle(cornerRadius: 20)
-            if card.isFaceUp {
-                shape.fill().foregroundColor(.white)
-                shape.strokeBorder(lineWidth: 3)
-                Text(card.content).font(.largeTitle)
-            } else if card.isMatched {
-                shape.opacity(0)
-            } else {
-                shape.fill()
+        GeometryReader(content: { geometry in
+            ZStack {
+                let shape = RoundedRectangle(cornerRadius: DrawingConstants.cornerRadius)
+                if card.isFaceUp {
+                    shape.fill().foregroundColor(.white)
+                    shape.strokeBorder(lineWidth: DrawingConstants.linewidth)
+                    Pie(startAngle: Angle(degrees: -90), endAngle: Angle(degrees: 20))
+                        .padding(5)
+                        .opacity(0.5)
+                    Text(card.content).font(font(in: geometry.size))
+                } else if card.isMatched {
+                    shape.opacity(0)
+                } else {
+                    shape.fill()
+                }
             }
-        }
+        })
+        
+    }
+    
+    private func font (in size: CGSize) -> Font {
+        Font.system(size: min(size.width, size.width) * DrawingConstants.fontScale)
+    }
+    
+    private struct DrawingConstants {
+        static let cornerRadius: CGFloat = 15
+        static let linewidth: CGFloat = 3
+        static let fontScale: CGFloat = 0.7
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         let game = EmojiMemoryGame(chosenTheme: .vehicles)
+        game.choose(game.cards.first!)
         
-        EmojiMemoryGameView(game: game)
+        return EmojiMemoryGameView(game: game)
             .previewDevice("iPhone 13 Pro Max")
             .preferredColorScheme(.dark)
-        EmojiMemoryGameView(game: game)
-            .previewDevice("iPhone 13 mini")
-            .preferredColorScheme(.light)
-            .previewInterfaceOrientation(.landscapeLeft)
+//        EmojiMemoryGameView(game: game)
+//            .previewDevice("iPhone 13 mini")
+//            .preferredColorScheme(.light)
+//            .previewInterfaceOrientation(.landscapeLeft)
         
     }
 }
