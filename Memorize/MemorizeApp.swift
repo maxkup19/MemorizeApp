@@ -10,7 +10,7 @@ import SwiftUI
 @main
 struct MemorizeApp: App {
     
-    private let game = EmojiMemoryGame(chosenTheme: Theme.allCases.randomElement()!)
+    private let game = EmojiMemoryGame()
     
     var body: some Scene {
         WindowGroup {
