@@ -50,8 +50,10 @@ class EmojiMemoryGame: ObservableObject {
     func newGame() {
         theme = gameThemes.randomElement()!
         theme.numberOfCardsToShow = Int.random(in: 4...theme.emojiSet.count)
-        model = MemoryGame<String>(numberOfPairsOfCards: numberOfCardsToShow) { index in (theme.emojiSet[index])}
+        model = MemoryGame<String>(numberOfPairsOfCards: theme.numberOfCardsToShow) { index in theme.emojiSet[index] }
     }
+    
+    func shuffle() { model.shuffle() }
 }
 
 struct CardTheme {
