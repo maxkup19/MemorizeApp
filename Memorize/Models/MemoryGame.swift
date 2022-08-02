@@ -69,11 +69,13 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
                 }
             }
         }
+        
         var isMatched = false {
             didSet {
                 stopUsingBonusTime()
             }
         }
+        
         var alreadySeen = false
         
         let content: CardContent
