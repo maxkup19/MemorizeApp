@@ -46,10 +46,3 @@ struct GameEndView: View {
     }
     
 }
-
-//struct GameEndView_Previews: PreviewProvider {
-//    static var previews: some View {
-//
-//        GameEndView(finalScore: -12)
-//    }
-//}
