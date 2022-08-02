@@ -33,7 +33,7 @@ extension Color {
         case "purple":
             return .purple
         default:
-            return .cyan
+            return .black
         }
     }
 }
