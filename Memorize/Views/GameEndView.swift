@@ -32,7 +32,6 @@ struct GameEndView: View {
                 
                 Button("New Game") {
                     game.newGame()
-                    EmojiMemoryGameView(game: game)
                 }
                 .padding()
                 .foregroundColor(.blue)
