@@ -35,6 +35,7 @@ class EmojiMemoryGame: ObservableObject {
     var color: String { theme.color }
     var numberOfCardsToShow: Int { theme.numberOfCardsToShow }
     var gameScore: Int { model.score }
+    var ended: Bool { model.gameEnded }
     
     init() {
         theme = initialTheme
