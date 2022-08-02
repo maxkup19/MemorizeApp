@@ -10,7 +10,6 @@ import SwiftUI
 struct GameEndView: View {
     
     @ObservedObject var game: EmojiMemoryGame
-//    let finalScore: Int
     
     var body: some View {
         ZStack {
@@ -44,5 +43,4 @@ struct GameEndView: View {
         }
         .ignoresSafeArea()
     }
-    
 }
